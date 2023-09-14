@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using App.Scripts.Libs.Factory;
 using App.Scripts.Scenes.SceneWordSearch.Features.Level.Models.Level;
+using System.Collections.Generic;
 
 namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel
 {
@@ -21,8 +22,27 @@ namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel
 
         private List<char> BuildListChars(List<string> words)
         {
+            List<char> listChars = new List<char>();
+
+            for (int i = 0; i < words.Count; i++)
+            {
+                var word = words[i];
+
+                for (int j = 0; j < word.Length; j++)
+                {
+                    var letter = words[i][j];
+
+                    if (!listChars.Contains(letter))
+                    {
+                        listChars.Add(letter);
+                    }
+                }
+            }
+
+            return listChars;
+
             //напиши реализацию не меняя сигнатуру функции
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

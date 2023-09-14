@@ -40,11 +40,6 @@ namespace App.Scripts.Scenes.SceneFillwords.Features.ProviderLevel
         {
             int levelIndex = index - 1;
 
-            //string pathToPack = "Assets/App/Resources/Fillwords/pack_0.txt";
-            //string pathToWordsList = "Assets/App/Resources/Fillwords/words_list.txt";
-
-            //string[] levels = File.ReadAllLines(pathToPack);
-            //string[] words = File.ReadAllLines(pathToWordsList);
             string[] wordsList = Resources.Load<TextAsset>("Fillwords/words_list").text.Split('\r');
             string[] pack = Resources.Load<TextAsset>("Fillwords/pack_0").text.Split('\r');
 
@@ -65,10 +60,9 @@ namespace App.Scripts.Scenes.SceneFillwords.Features.ProviderLevel
                 if (level != null)
                     return level;
             }
+
             throw new Exception();
             return null;
-
-            //return LoadLevel(levelIndex, wordsList, pack);
 
             ////напиши реализацию не меняя сигнатуру функции
             //throw new NotImplementedException();
@@ -78,8 +72,6 @@ namespace App.Scripts.Scenes.SceneFillwords.Features.ProviderLevel
         {
             try
             {
-
-
                 int size;
 
                 string[] levelLogic = pack[index].Split(' ');
@@ -94,11 +86,10 @@ namespace App.Scripts.Scenes.SceneFillwords.Features.ProviderLevel
                     letterArrang[j] = levelLogic[i + 1];
                 }
 
-                foreach (var w in words)
-                    Debug.Log("Words: " + w + ", " + w.Length);
-                foreach (var w in letterArrang)
-                    Debug.Log("Letter arrang: " + w + ", " + w.Length);
-
+                //foreach (var w in words)
+                //    Debug.Log("Words: " + w + ", " + w.Length);
+                //foreach (var w in letterArrang)
+                //    Debug.Log("Letter arrang: " + w + ", " + w.Length);
 
                 size = GetSize(words);
 
@@ -106,7 +97,11 @@ namespace App.Scripts.Scenes.SceneFillwords.Features.ProviderLevel
 
                 return CreateGrid(size, fillWord);
             }
-            catch { return null; }
+            catch (Exception e)
+            {
+                //throw new Exception();
+                return null;
+            }
         }
 
         private int GetSize(string[] words)
