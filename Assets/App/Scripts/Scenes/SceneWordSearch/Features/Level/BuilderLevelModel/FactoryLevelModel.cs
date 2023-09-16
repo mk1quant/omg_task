@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using App.Scripts.Libs.Factory;
 using App.Scripts.Scenes.SceneWordSearch.Features.Level.Models.Level;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel
 {
@@ -22,27 +21,41 @@ namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel
 
         private List<char> BuildListChars(List<string> words)
         {
-            List<char> listChars = new List<char>();
+            var levelCharsRepeatMap = new Dictionary<char, int>();
 
-            for (int i = 0; i < words.Count; i++)
+            foreach (var word in words)
             {
-                var word = words[i];
+                var wordCharsRepeatMap = new Dictionary<char, int>();
 
-                for (int j = 0; j < word.Length; j++)
+                foreach (var letter in word)
                 {
-                    var letter = words[i][j];
+                    if (wordCharsRepeatMap.ContainsKey(letter))
+                        wordCharsRepeatMap[letter]++;
+                    else
+                        wordCharsRepeatMap[letter] = 1;
+                }
 
-                    if (!listChars.Contains(letter))
+                foreach (var (character, repeatsCount) in wordCharsRepeatMap)
+                {
+                    if (!levelCharsRepeatMap.ContainsKey(character))
                     {
-                        listChars.Add(letter);
+                        levelCharsRepeatMap[character] = repeatsCount;
+                        continue;
                     }
+
+                    if (repeatsCount > levelCharsRepeatMap[character])
+                        levelCharsRepeatMap[character] = repeatsCount;
                 }
             }
 
-            return listChars;
+            var charsList = new List<char>();
 
-            //напиши реализацию не меняя сигнатуру функции
-            //throw new NotImplementedException();
+            foreach (var (character, repeatsCount) in levelCharsRepeatMap)
+            {
+                charsList.AddRange(Enumerable.Repeat(character, repeatsCount));
+            }
+
+            return charsList;
         }
     }
 }

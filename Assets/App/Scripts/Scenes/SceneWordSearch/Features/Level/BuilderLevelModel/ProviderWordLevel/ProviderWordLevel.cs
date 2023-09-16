@@ -1,15 +1,16 @@
 using System;
 using App.Scripts.Scenes.SceneWordSearch.Features.Level.Models.Level;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel.ProviderWordLevel
 {
     public class ProviderWordLevel : IProviderWordLevel
     {
+        private const string PATH_LEVELS = "WordSearch/Levels/";
+
         public LevelInfo LoadLevelData(int levelIndex)
         {
-            string path = "WordSearch/Levels/" + levelIndex.ToString();
+            string path = PATH_LEVELS + levelIndex.ToString();
 
             var jsonTextFile = Resources.Load<TextAsset>(path);
 
@@ -22,11 +23,6 @@ namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel.Pr
             {
                 throw new Exception();
             }
-
-            return null;
-
-            //напиши реализацию не меняя сигнатуру функции
-            //throw new NotImplementedException();
         }
     }
 }
