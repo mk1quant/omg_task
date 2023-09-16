@@ -1,11 +1,8 @@
 using System;
-using System.IO;
 using App.Scripts.Scenes.SceneFillwords.Features.FillwordModels;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEditor;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace App.Scripts.Scenes.SceneFillwords.Features.ProviderLevel
 {
@@ -57,11 +54,6 @@ namespace App.Scripts.Scenes.SceneFillwords.Features.ProviderLevel
                     letterArrang[j] = levelLogic[i + 1];
                 }
 
-                //foreach (var w in words)
-                //    Debug.Log("Words: " + w + ", " + w.Length);
-                //foreach (var w in letterArrang)
-                //    Debug.Log("Letter arrang: " + w + ", " + w.Length);
-
                 int size = GetSize(words);
 
                 char[] fillWord = FillWord(size, letterArrang, words);
@@ -71,7 +63,6 @@ namespace App.Scripts.Scenes.SceneFillwords.Features.ProviderLevel
             catch (Exception e)
             {
                 Debug.LogException(e);
-                //throw new Exception();
                 return null;
             }
         }
@@ -106,10 +97,15 @@ namespace App.Scripts.Scenes.SceneFillwords.Features.ProviderLevel
 
                 if (positions.Any(position => Convert.ToInt32(position) < 0 || Convert.ToInt32(position) >= size * size))
                 {
-                    throw new ArgumentException("Invalid position");
+                    throw new Exception("Invalid position");
                 }
 
                 string word = words[i];
+
+                if(word.Length != positions.Length)
+                {
+                    throw new Exception("Invalid positions count");
+                }
 
                 for (int j = 0; j < word.Length; j++)
                 {
